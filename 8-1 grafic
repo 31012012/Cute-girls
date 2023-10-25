@@ -1,0 +1,41 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from textwrap import wrap
+
+#считываем данные
+data_array = np.loadtxt("data.txt", dtype = float)
+data_setting = np.loadtxt("settings.txt", dtype = float)
+#data_time = np.linspace(0, data_setting[0],data_array.size)
+data_time = np.loadtxt("time.txt", dtype = float)
+
+
+#заводим место для графика
+fig,ax =plt.subplots(figsize=(16,12),dpi=100)
+ax.grid(which = 'major', color = 'k') #определяет настройки сетки
+ax.axis([data_array.min(),data_time.max() + 1, data_array.min(),data_array.max() + 0.2]) #установка свойств осей 
+ax.minorticks_on() #цена деления
+ax.grid(which = 'minor', color = 'grey',linestyle = ':' )
+
+#строим зависисмоть 
+ax.plot(data_time[0:data_time.size:5],data_array[0:data_array.size:5],label = "Зависимость напряжения от времени", color = 'blue',linestyle ='-', markersize = 5,  marker = 'v', markerfacecolor = 'green', markeredgewidth = 1.5, markeredgecolor = 'green')
+#ax.scatter(data_time[0:data_time.size:5], data_array[0:data_array.size:5], marker = 'v', color = 'green', markersize = 3)
+
+#подписи
+ax.set_title("\n".join(wrap("Зарядка и разрядка конденсатора")), loc = 'center')
+ax.set_xlabel("Время t, сек")
+ax.set_ylabel("Напряжение U, В")
+
+plt.rc('font',**{'family': 'Courier New'})
+plt.text(9, 1.25, 'Время зарядки: 7,4 секунды')
+plt.text(9, 1.1, 'Время заряда: 10,8 секунды')
+
+#легенда
+ax.legend()
+
+#показать
+plt.show()
+
+#сохранть
+#fig.savefig('grafic.svg')
+
+
